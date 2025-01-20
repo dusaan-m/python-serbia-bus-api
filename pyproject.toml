@@ -7,7 +7,9 @@ authors = [
     { name = "dusaan-m", email = "dusanmilivojevic01@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "hishel>=0.1.1",
+]
 
 [build-system]
 requires = ["hatchling"]
