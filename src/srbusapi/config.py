@@ -16,7 +16,6 @@ class AES:
     iv: bytes
 
 
-@dataclass
 class BeogradConfig(CityConfig):
     name = "Beograd"  #: Obicno ime
     url = "https://announcement-bgnaplata.ticketing.rs"
