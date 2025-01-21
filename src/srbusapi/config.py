@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -8,6 +9,7 @@ class CityConfig:
     api_key: str
     stations_endpoint: str
     api_endpoint: str
+    aes: Optional["AES"] = None
 
 
 @dataclass
