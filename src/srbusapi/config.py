@@ -1,7 +1,14 @@
+"""
+This module contains configuration classes for different city systems, including base configurations
+and specific city implementations. It also defines AES encryption key handling.
+"""
+
 from dataclasses import dataclass
 
 
 class BaseCityConfig:
+    """Base configuration for a city's API and related details."""
+
     name: str
     url: str
     api_key: str
@@ -11,12 +18,16 @@ class BaseCityConfig:
 
 @dataclass
 class AES:
+    """Represents AES encryption keys and initialization vectors (IVs)."""
+
     key: bytes
     iv: bytes
 
 
 @dataclass(frozen=True, slots=True)
 class BeogradConfigBase(BaseCityConfig):
+    """Configuration and AES keys specific to the Beograd city system."""
+
     name = "Beograd"  #: Obicno ime
     url = "https://announcement-bgnaplata.ticketing.rs"
     api_key = "1688dc355af72ef09287"
@@ -44,6 +55,8 @@ class BeogradConfigBase(BaseCityConfig):
 
 @dataclass(frozen=True, slots=True)
 class NoviSadConfigBase(BaseCityConfig):
+    """Configuration specific to the Novi Sad city system."""
+
     name = "Novi_Sad"
     url = "https://online.nsmart.rs"
     api_key = "4670f468049bbee2260"
@@ -53,6 +66,8 @@ class NoviSadConfigBase(BaseCityConfig):
 
 @dataclass(frozen=True, slots=True)
 class NisConfigBase(BaseCityConfig):
+    """Configuration specific to the Nis city system."""
+
     name = "Nis"
     url = "https://online.jgpnis.rs"
     api_key = "1688dc355af72ef09287"

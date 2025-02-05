@@ -11,10 +11,29 @@ logger = logging.getLogger(__name__)
 
 
 def generate_cache_key(city_name: str, key: str, *args):
+    """
+    Generate a unique cache key based on city name, key, and additional arguments.
+
+    :param city_name: Name of the city (string).
+    :param key: Key identifying the cached resource.
+    :param args: Additional arguments to include in the cache key.
+    :return: A unique string cache key.
+    """
     return ":".join([city_name, key, *[str(arg) for arg in args]])
 
 
 def cache_data(expiration: timedelta):
+    """
+    A decorator to cache the results of an asynchronous function.
+
+    Cached data is stored with a defined expiration time. On cache hit,
+    returns the cached result. On cache miss or cache error, executes
+    the function and caches the result.
+
+    :param expiration: Time duration for cache expiration.
+    :return: Decorated asynchronous function with caching enabled.
+    """
+
     def decorator(func: Callable):
         if not inspect.iscoroutinefunction(func):
             raise TypeError("The decorated function must be asynchronous.")
@@ -52,6 +71,18 @@ def cache_data(expiration: timedelta):
 
 
 def cache_route(expiration: timedelta = timedelta(days=15)):
+    """
+    A decorator to cache route data with version control.
+
+    Caches data with a version check, ensuring the cached version
+    matches the current route version. On cache hit, returns the cached
+    data. On cache miss or version mismatch, executes the function and
+    updates the cache.
+
+    :param expiration: Time duration for cache expiration, default is 15 days.
+    :return: Decorated asynchronous function with caching and version control.
+    """
+
     def decorator(func: Callable):
         if not inspect.iscoroutinefunction(func):
             raise TypeError("The decorated function must be asynchronous.")

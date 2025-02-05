@@ -3,28 +3,24 @@ from datetime import timedelta
 
 class BaseCache:
     """
-    Base class defining a cache interface.
-
-    This class provides an interface for caching implementations with methods
-    to store and retrieve data, which should be overridden by subclasses.
+    A base class for implementing caching backends. Provides interface methods that must
+    be implemented by any specific cache subclasses.
     """
 
     async def get_data(self, key: str):
         """
-        Retrieve data from the cache.
+        Retrieve the value associated with a given key from the cache.
 
-        Args:
-            key (str): The unique key used to identify the cached data.
+        :param key: The key to look up in the cache.
         """
         raise NotImplementedError
 
     async def set_data(self, key: str, value, expiration: timedelta | None):
         """
-        Store data in the cache.
+        Store a value in the cache with an optional expiration time.
 
-        Args:
-            key (str): The unique key to identify the cached data.
-            value (Any): The data to be cached.
-            expiration (timedelta): The expiration time for the cached data.
+        :param key: The key under which the value will be stored.
+        :param value: The value to be stored in the cache.
+        :param expiration: An optional timedelta specifying the time until the value expires.
         """
         raise NotImplementedError

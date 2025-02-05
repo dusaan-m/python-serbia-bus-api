@@ -8,6 +8,15 @@ from srbusapi.exceptions import EncryptionError, DecryptionError
 
 
 def encrypt(base_dict: dict, b64_key: bytes, b64_iv: bytes) -> bytes:
+    """
+    Encrypts a dictionary using AES encryption in CBC mode.
+
+    :param base_dict: The dictionary to encrypt.
+    :param b64_key: The base64-encoded encryption key.
+    :param b64_iv: The base64-encoded initialization vector.
+    :return: The encrypted data, base64-encoded as bytes.
+    :raises EncryptionError: If encryption fails due to invalid input or other errors.
+    """
     try:
         if not isinstance(base_dict, dict):
             raise EncryptionError("Input data must be a dictionary")
@@ -26,6 +35,15 @@ def encrypt(base_dict: dict, b64_key: bytes, b64_iv: bytes) -> bytes:
 
 
 def decrypt(cipher_text: bytes, b64_key: bytes, b64_iv: bytes) -> dict:
+    """
+    Decrypts data encrypted with AES encryption in CBC mode.
+
+    :param cipher_text: The encrypted data, base64-encoded as bytes.
+    :param b64_key: The base64-encoded encryption key.
+    :param b64_iv: The base64-encoded initialization vector.
+    :return: The decrypted data as a dictionary.
+    :raises DecryptionError: If decryption fails due to invalid input or other errors.
+    """
     try:
         key = b64decode(b64_key)
         iv = b64decode(b64_iv)
