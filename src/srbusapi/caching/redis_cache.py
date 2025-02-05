@@ -4,10 +4,6 @@ import os
 from datetime import timedelta
 from typing import Optional
 
-import redis.asyncio as redis
-from redis.asyncio import Redis
-from redis.exceptions import RedisError
-
 from srbusapi.caching.base_cache import BaseCache
 from srbusapi.exceptions import CacheError, ConfigurationError
 
@@ -36,6 +32,16 @@ class RedisCache(BaseCache):
         :param password: Password for authenticated access, optional.
         :param db: Database index to connect to, defaults to 0.
         """
+        try:
+            import redis.asyncio as redis
+
+            self._redis_error = redis.exceptions.RedisError
+        except ImportError:
+            raise ImportError(
+                "Redis is extra dependency for this module. "
+                "It is needed for RedisCache. "
+                "You can install it via pip install srbusapi[redis]"
+            )
         host, port, username, password = self._from_env(host, port, username, password)
 
         self.pool = redis.ConnectionPool(
@@ -48,7 +54,7 @@ class RedisCache(BaseCache):
             retry_on_timeout=True,
             max_connections=10,
         )
-        self.client: Redis = redis.Redis(connection_pool=self.pool)
+        self.client: redis.Redis = redis.Redis(connection_pool=self.pool)
 
     @staticmethod
     def _from_env(
@@ -86,7 +92,7 @@ class RedisCache(BaseCache):
         """
         try:
             return await self.client.get(key)
-        except RedisError as e:
+        except self._redis_error as e:
             logger.error(f"Redis GET error for key {key}: {str(e)}")
             raise CacheError(f"Failed to get data from Redis: {str(e)}")
 
@@ -100,7 +106,7 @@ class RedisCache(BaseCache):
         """
         try:
             await self.client.set(key, json.dumps(value), ex=ex)
-        except RedisError as e:
+        except self._redis_error as e:
             logger.error(f"Redis SET error for key {key}: {str(e)}")
             raise CacheError(f"Failed to set data in Redis: {str(e)}")
 
