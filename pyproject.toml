@@ -12,6 +12,11 @@ dependencies = [
     "pycryptodome>=3.21.0",
 ]
 
+[project.optional-dependencies]
+redis = [
+    "redis>=5.2.1",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
