@@ -34,8 +34,9 @@ class RedisCache(BaseCache):
         """
         try:
             import redis.asyncio as redis
+            from redis.exceptions import RedisError
 
-            self._redis_error = redis.exceptions.RedisError
+            self._redis_error = RedisError
         except ImportError:
             raise ImportError(
                 "Redis is extra dependency for this module. "
