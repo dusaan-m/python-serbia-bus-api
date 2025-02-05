@@ -1,7 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 from datetime import timedelta
-import inspect
 
 from srbusapi.caching.caching_decorators import (
     cache_data,

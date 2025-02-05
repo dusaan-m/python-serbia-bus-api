@@ -1,8 +1,6 @@
 import pytest
-import json
 import base64
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
 
 from srbusapi.crypto import encrypt, decrypt
 from srbusapi.exceptions import EncryptionError, DecryptionError

@@ -1,11 +1,9 @@
 import os
 import json
 import pytest
-import asyncio
 from datetime import timedelta
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch
 
-import redis.asyncio as redis
 from redis.exceptions import RedisError
 
 from srbusapi.caching.redis_cache import RedisCache
@@ -66,7 +64,7 @@ class TestRedisCache:
         # Clear environment variables
         with patch.dict(os.environ, {"REDIS_HOST": "", "REDIS_PORT": ""}):
             with pytest.raises(
-                    ConfigurationError, match="Redis host and port must be provided"
+                ConfigurationError, match="Redis host and port must be provided"
             ):
                 RedisCache()
 
