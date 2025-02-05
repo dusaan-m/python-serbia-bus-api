@@ -1,4 +1,3 @@
-
 import pytest
 
 from srbusapi import BeogradClient

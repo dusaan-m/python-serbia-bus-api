@@ -1,4 +1,3 @@
-
 import pytest
 
 from srbusapi.caching.redis_cache import RedisCache
