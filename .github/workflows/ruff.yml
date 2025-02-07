@@ -17,4 +17,4 @@ jobs:
       - name: Run Ruff format
         run: ruff format
       - name: Run Ruff
-        run: ruff check --output-format=github .
+        run: ruff check --fix
